@@ -48,7 +48,7 @@ delete_unused() {
   rm -r "${PACKAGE_NAME}"/test >/dev/null 2>&1 || true
 
   rm "${PACKAGE_NAME}"/rest.py >/dev/null 2>&1 || true
-  rm "${PACKAGE_NAME}"/configuration.py >/dev/null 2>&1 || true
+#  rm "${PACKAGE_NAME}"/configuration.py >/dev/null 2>&1 || true
 }
 
 apply_formatters() {
