@@ -1,9 +1,13 @@
 from datetime import datetime
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Union
 from typing import Any  # noqa
 from typing_extensions import Literal
 from uuid import UUID
 from pydantic import BaseModel, Field
+
+# This is a dirty hack - proper way it to upgrade OpenAPI generator for at least 5.0
+# But this upgrade will also require updating of all templates. Maybe some other day
+AnyOfstringinteger = Union[str, int]
 
 {{#models}}
 {{#model}}

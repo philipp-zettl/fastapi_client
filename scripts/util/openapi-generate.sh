@@ -55,6 +55,8 @@ validate_inputs() {
   IS_HTTP="$(echo "$INPUT" | grep '^https\{0,1\}://' || true)"
 }
 
+TYPE_MAPPING="array=List,uuid=UUID,file=IO,object=Any"
+
 generate_in_docker_http() {
   docker run --user $(id -u):$(id -g) --rm -v "$WORK_DIR":/generator-output -v "$PROJECT_ROOT":/local $OPENAPI_IMAGE generate \
     -g python \
@@ -62,7 +64,7 @@ generate_in_docker_http() {
     --package-name="${PACKAGE_NAME}" \
     --additional-properties=generateSourceCodeOnly=true \
     -t /local/openapi-python-templates \
-    --type-mappings array=List,uuid=UUID,file=IO,object=Any \
+    --type-mappings ${TYPE_MAPPING} \
     -i "${INPUT}" \
     "$@"
 }
@@ -77,7 +79,7 @@ generate_in_docker_file() {
     --package-name="${PACKAGE_NAME}" \
     --additional-properties=generateSourceCodeOnly=true \
     -t /local/openapi-python-templates \
-    --type-mappings array=List,uuid=UUID,file=IO,object=Any \
+    --type-mappings ${TYPE_MAPPING} \
     -i /openapi.json \
     "$@"
 }
