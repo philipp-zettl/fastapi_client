@@ -62,14 +62,17 @@
         "properties": {
           "action": {
             "title": "Action",
-            "enum": [
-              "create",
-              "delete",
-              "reindex"
-            ],
-            "type": "string",
-            "description": "Action to perform",
-            "default": "create"
+            "type": "array",
+            "items": {
+              "enum": [
+                "create",
+                "delete",
+                "reindex"
+              ],
+              "type": "string",
+              "default": "create"
+            },
+            "description": "Action to perform"
           },
           "id": {
             "title": "Id",
