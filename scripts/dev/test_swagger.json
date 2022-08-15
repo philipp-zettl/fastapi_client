@@ -1,0 +1,94 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Job matching",
+    "description": "API for searching and matching occupations, CV and job description processing",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Main",
+        "operationId": "main__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/job/update": {
+      "post": {
+        "summary": "Process Update",
+        "description": "perform update of job records",
+        "operationId": "process_update_job_update_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Updates",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/JobUpdateModel"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "JobUpdateModel": {
+        "title": "JobUpdateModel",
+        "type": "object",
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "array",
+            "items": {
+              "enum": [
+                "create",
+                "delete",
+                "reindex"
+              ],
+              "type": "string",
+              "default": "create"
+            },
+            "description": "Action to perform"
+          },
+          "id": {
+            "title": "Id",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "description": "Id of the record to perform action on",
+            "default": 42
+          }
+        }
+      }
+    }
+  }
+}
