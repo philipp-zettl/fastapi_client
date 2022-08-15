@@ -169,7 +169,6 @@ class _PetApi:
         Multiple status values can be provided with comma separated strings
         """
         query_params = {"status": str(status)}
-
         return self.api_client.request(type_=List[m.Pet], method="GET", url="/pet/findByStatus", params=query_params,)
 
     def _build_for_find_pets_by_tags(self, tags: List[str]) -> Awaitable[List[m.Pet]]:
@@ -177,7 +176,6 @@ class _PetApi:
         Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
         """
         query_params = {"tags": str(tags)}
-
         return self.api_client.request(type_=List[m.Pet], method="GET", url="/pet/findByTags", params=query_params,)
 
     def _build_for_get_pet_by_id(self, pet_id: int) -> Awaitable[m.Pet]:
@@ -185,7 +183,6 @@ class _PetApi:
         Returns a single pet
         """
         path_params = {"petId": str(pet_id)}
-
         return self.api_client.request(type_=m.Pet, method="GET", url="/pet/{petId}", path_params=path_params,)
 
     def _build_for_update_pet(self, body: m.Pet) -> Awaitable[None]:

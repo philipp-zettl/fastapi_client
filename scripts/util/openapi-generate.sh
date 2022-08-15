@@ -8,6 +8,7 @@ CMDNAME=${0##*/}
 PACKAGE_NAME=""
 INPUT=""
 WORK_DIR=""
+SOURCE_CODE_ONLY="true"
 
 OPENAPI_IMAGE="openapitools/openapi-generator-cli:v4.1.2"
 
@@ -24,6 +25,7 @@ Options:
   -p, --package-name       The name to use for the generated package
   -w, --work-dir           The working directory to use for generator output
   -i, --input              The location of the OpenAPI spec, as URL or file
+  -m, --with-meta          Generate meta-data (setup.py, docs, tests)
   -h, --help               Show this message
 USAGE
   exit "$exitcode"
@@ -62,7 +64,7 @@ generate_in_docker_http() {
     -g python \
     -o /generator-output \
     --package-name="${PACKAGE_NAME}" \
-    --additional-properties=generateSourceCodeOnly=true \
+    --additional-properties=generateSourceCodeOnly="${SOURCE_CODE_ONLY}" \
     -t /local/openapi-python-templates \
     --type-mappings ${TYPE_MAPPING} \
     -i "${INPUT}" \
@@ -77,7 +79,7 @@ generate_in_docker_file() {
     -g python \
     -o /generator-output \
     --package-name="${PACKAGE_NAME}" \
-    --additional-properties=generateSourceCodeOnly=true \
+    --additional-properties=generateSourceCodeOnly="${SOURCE_CODE_ONLY}" \
     -t /local/openapi-python-templates \
     --type-mappings ${TYPE_MAPPING} \
     -i /openapi.json \
@@ -97,6 +99,10 @@ while [ $# -gt 0 ]; do
   -w | --work-dir)
     WORK_DIR=$2
     shift 2
+    ;;
+  -m | --with-meta)
+    SOURCE_CODE_ONLY="false"
+    shift 1
     ;;
   -h | --help)
     usage 0

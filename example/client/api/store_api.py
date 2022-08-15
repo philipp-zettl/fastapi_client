@@ -158,7 +158,9 @@ class _StoreApi:
             type_=None, method="DELETE", url="/store/order/{orderId}", path_params=path_params,
         )
 
-    def _build_for_get_inventory(self,) -> Awaitable[Dict[str, int]]:
+    def _build_for_get_inventory(
+        self,
+    ) -> Awaitable[Dict[str, int]]:
         """
         Returns a map of status codes to quantities
         """
@@ -187,7 +189,9 @@ class AsyncStoreApi(_StoreApi):
         """
         return await self._build_for_delete_order(order_id=order_id)
 
-    async def get_inventory(self,) -> Dict[str, int]:
+    async def get_inventory(
+        self,
+    ) -> Dict[str, int]:
         """
         Returns a map of status codes to quantities
         """
@@ -211,7 +215,9 @@ class SyncStoreApi(_StoreApi):
         coroutine = self._build_for_delete_order(order_id=order_id)
         return get_event_loop().run_until_complete(coroutine)
 
-    def get_inventory(self,) -> Dict[str, int]:
+    def get_inventory(
+        self,
+    ) -> Dict[str, int]:
         """
         Returns a map of status codes to quantities
         """

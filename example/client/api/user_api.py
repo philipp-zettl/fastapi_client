@@ -225,7 +225,9 @@ class AsyncUserApi(_UserApi):
     async def login_user(self, username: str, password: str) -> str:
         return await self._build_for_login_user(username=username, password=password)
 
-    async def logout_user(self,) -> None:
+    async def logout_user(
+        self,
+    ) -> None:
         return await self._build_for_logout_user()
 
     async def update_user(self, username: str, body: m.User) -> None:
@@ -266,7 +268,9 @@ class SyncUserApi(_UserApi):
         coroutine = self._build_for_login_user(username=username, password=password)
         return get_event_loop().run_until_complete(coroutine)
 
-    def logout_user(self,) -> None:
+    def logout_user(
+        self,
+    ) -> None:
         coroutine = self._build_for_logout_user()
         return get_event_loop().run_until_complete(coroutine)
 
