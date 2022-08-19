@@ -1,31 +1,30 @@
-from datetime import date, datetime, timedelta
-from typing import Optional, List, Dict
+from datetime import datetime
+from typing import Optional, List, Dict, Union
 from typing import Any  # noqa
 from typing_extensions import Literal
 from uuid import UUID
 from pydantic import BaseModel, Field
-from .configuration import AnyOfstringinteger, AnyOfstringstringstring
 
 
 {{#models}}
 {{#model}}
-
 {{#allowableValues}}
 from enum import Enum
 
+
 class {{classname}}(str, Enum):
+    pass
 {{#enumVars}}
     {{name}} = {{{value}}}{{^-last}}
 {{/-last}}
 {{/enumVars}}
-{{/allowableValues}}
 
+{{/allowableValues}}
 {{^allowableValues}}
 class {{classname}}(BaseModel):
 {{#vars}}
     {{name}}: "{{^required}}Optional[{{/required}}{{>_dataTypeModel}}{{^required}}]{{/required}}" = Field({{#required}}...{{/required}}{{^required}}None{{/required}}, alias="{{baseName}}")
 {{/vars}}
 {{/allowableValues}}
-
 {{/model}}
 {{/models}}
