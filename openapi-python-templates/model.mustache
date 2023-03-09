@@ -13,7 +13,6 @@ from enum import Enum
 
 
 class {{classname}}(str, Enum):
-    pass
 {{#enumVars}}
     {{name}} = {{{value}}}{{^-last}}
 {{/-last}}
@@ -23,7 +22,7 @@ class {{classname}}(str, Enum):
 {{^allowableValues}}
 class {{classname}}(BaseModel):
 {{#vars}}
-    {{name}}: "{{^required}}Optional[{{/required}}{{>_dataTypeModel}}{{^required}}]{{/required}}" = Field({{#required}}...{{/required}}{{^required}}None{{/required}}, alias="{{baseName}}")
+    {{name}}: "{{^required}}Optional[{{/required}}{{>_dataTypeModel}}{{^required}}]{{/required}}" = Field({{#required}}...{{/required}}{{^required}}{{>_defaultValueModel}}{{/required}}, alias="{{baseName}}")
 {{/vars}}
 {{/allowableValues}}
 {{/model}}
