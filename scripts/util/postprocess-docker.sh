@@ -62,6 +62,7 @@ fix_any_of() {
 
 remove_any_imports() {
   find . -name "models.py" -exec sed -i.bak "s/from typing import Any/Any = str/" {} \;
+  find . -name "*.bak" -exec rm {} \;
 }
 
 apply_formatters() {
