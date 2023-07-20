@@ -27,6 +27,8 @@ main() {
   delete_unused
   fix_any_of
   apply_formatters
+  remove_any_imports
+  apply_sorting
 }
 
 validate_inputs() {
@@ -58,10 +60,18 @@ fix_any_of() {
   find . -name "*.bak" -exec rm {} \;
 }
 
+remove_any_imports() {
+  find . -name "models.py" -exec sed -i.bak "s/from typing import Any/Any = str/" {} \;
+}
+
 apply_formatters() {
   autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place "${PACKAGE_NAME}" --exclude=__init__.py
   isort --float-to-top -w 120 -m 3 --trailing-comma --force-grid-wrap 0 --combine-as -p "${PACKAGE_NAME}" "${PACKAGE_NAME}"
   black --fast -l 120 --target-version py36 "${PACKAGE_NAME}"
+}
+
+apply_sorting() {
+  isort --float-to-top -w 120 -m 3 --trailing-comma --force-grid-wrap 0 --combine-as -p "${PACKAGE_NAME}" "${PACKAGE_NAME}"
 }
 
 while [ $# -gt 0 ]; do
