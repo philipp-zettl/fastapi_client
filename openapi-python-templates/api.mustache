@@ -1,6 +1,6 @@
 # flake8: noqa E501
 import json
-from asyncio import get_event_loop
+import asyncio
 from typing import Any, Awaitable, Dict, IO, List, TYPE_CHECKING
 from datetime import date, datetime, timedelta
 from uuid import UUID
@@ -11,6 +11,16 @@ from @IMPORT_NAME@ import models as m
 
 if TYPE_CHECKING:
     from @IMPORT_NAME@.api_client import ApiClient
+
+
+def get_or_create_event_loop():
+  try:
+    return asyncio.get_event_loop()
+  except RuntimeError as ex:
+    if "There is no current event loop in thread" in str(ex):
+      loop = asyncio.new_event_loop()
+      asyncio.set_event_loop(loop)
+      return asyncio.get_event_loop()
 
 
 {{#operations}}
@@ -149,6 +159,6 @@ class Sync{{classname}}(_{{classname}}):
         """
 {{/notes}}
         coroutine = self._build_for_{{operationId}}({{#allParams}}{{paramName}}={{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
-        return get_event_loop().run_until_complete(coroutine)
+        return get_or_create_event_loop().run_until_complete(coroutine)
 {{/operation}}
 {{/operations}}
