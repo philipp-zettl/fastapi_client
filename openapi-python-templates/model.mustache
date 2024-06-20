@@ -1,14 +1,10 @@
 from datetime import datetime
 from typing import Optional, List, Dict, Union
-from typing import Any  # noqa
 from typing_extensions import Literal
 from uuid import UUID
 from pydantic import BaseModel, Field
-
-
-{{#models}}
-{{#model}}
-{{#allowableValues}}
+from typing import Any  # noqa
+{{#models}}{{#model}}{{#allowableValues}}
 from enum import Enum
 
 
